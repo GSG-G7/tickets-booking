@@ -1,7 +1,7 @@
 {
   "expo": {
-    "name": "tickets-booking",
-    "slug": "tickets-booking",
+    "name": "movies-ticket",
+    "slug": "movies-ticket",
     "privacy": "public",
     "sdkVersion": "36.0.0",
     "platforms": [
