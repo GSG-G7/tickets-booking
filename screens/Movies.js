@@ -21,7 +21,6 @@ export default class Movies extends React.Component {
   }
 
   componentDidMount() {
-    // console.log('5555',this.props)
     let cloned = [];
     firebase.firestore().collection('data').get()
     .then(snapshot => {
@@ -34,7 +33,7 @@ export default class Movies extends React.Component {
 
   render() {
     const { loading, movies } = this.state;
-    if(loading) return  <ActivityIndicator size="large" color="#0000ff" style={{justifyContent:"center"}}/>
+    if(loading) return  <ActivityIndicator size="large" color="#0000ff" style={{justifyContent:"center",flex:1,alignItems:"center"}}/>
     return (
       <View>
       <ScrollView contentContainerStyle={styles.movies}>

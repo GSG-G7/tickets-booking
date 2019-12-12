@@ -9,9 +9,11 @@ export default class Signup extends React.Component {
     password: '',
     error: '',
   }
-  handleSignup = () => {
+
+  handleSignup = async () => {
     const { email, password } = this.state;
-    firebase.auth().createUserWithEmailAndPassword(email,password).catch(err => this.setState({error: err.message}))
+    await firebase.auth().createUserWithEmailAndPassword(email,password).catch(err => this.setState({error: err.message}))
+    this.props.navigation.navigate('App')
   }
 
   render(){
@@ -22,15 +24,17 @@ export default class Signup extends React.Component {
         <TextInput style={styles.formInput} placeholder="Email" autoCapitalize="none" onChangeText={(email) => this.setState({email})}/>
         <TextInput style={styles.formInput} placeholder="Password" autoCapitalize="none" secureTextEntry={true} onChangeText={(password) => this.setState({password})}/>
         <TouchableOpacity style={styles.formButton}>
-        <Text style={styles.buttonText} onPress={this.handleSignup}>Sign up</Text>
-      </TouchableOpacity>
-      <TouchableOpacity style={styles.formButton}>
-        <Text style={styles.buttonText} onPress={() => this.props.navigation.navigate('Login')}>Login</Text>
-      </TouchableOpacity>
+          <Text style={styles.buttonText} onPress={this.handleSignup}>Sign up</Text>
+        </TouchableOpacity>
+        <View style={styles.loginContainer}>
+          <Text>You already have an account </Text>
+          <TouchableOpacity style={styles.loginButton} onPress={() => this.props.navigation.navigate('Login')}>
+            <Text style={styles.loginText}>login</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     );
   }
-  
 }
 
 const styles = StyleSheet.create({
@@ -43,6 +47,10 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontSize: 50,
     fontWeight: "bold"
+  },
+  loginContainer:{
+    flexDirection: "row",
+    flexWrap: 'wrap',
   },
   error: {
     color: 'red',
@@ -71,7 +79,9 @@ const styles = StyleSheet.create({
     fontSize: 30,
     textAlign:"center",
     padding:5,
-
-
+  },
+  loginText:{
+    color: '#3366ff',
+    textDecorationLine: 'underline',
   }
 });

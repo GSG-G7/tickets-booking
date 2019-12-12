@@ -24,9 +24,12 @@ export default class Login extends React.Component {
         <TouchableOpacity style={styles.formButton} onPress={this.handleLogin}>
         <Text style={styles.buttonText}>Login</Text>
       </TouchableOpacity>
-      <TouchableOpacity style={styles.formButton} onPress={() => this.props.navigation.navigate('Signup')}>
-        <Text style={styles.buttonText}>Sign up</Text>
+      <View style={styles.signupContainer}>
+      <Text>If you don't have account </Text>
+      <TouchableOpacity style={styles.signupButton} onPress={() => this.props.navigation.navigate('Signup')}>
+        <Text style={styles.signupText}>Sign up</Text>
       </TouchableOpacity>
+      </View>
       </View>
     );
   }
@@ -37,6 +40,10 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
+  },
+  signupContainer:{
+    flexDirection: "row",
+    flexWrap: 'wrap',
   },
   header: {
     marginBottom: 20,
@@ -70,5 +77,9 @@ const styles = StyleSheet.create({
     fontSize: 30,
     textAlign:"center",
     padding:5,
+  },
+  signupText:{
+    color: '#3366ff',
+    textDecorationLine: 'underline',
   }
 });
