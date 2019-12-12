@@ -17,17 +17,18 @@ export default class Booking extends React.Component{
   }
   handleBooking = async (title, genre, poster, times, days) => {
     const userId = await firebase.auth().currentUser.uid;
-    console.log(userId)
+    const { daySelected, timeSelected } = this.state;
     await firebase.firestore().collection(userId).doc(title).set({
       title,
       genre,
       poster,
-      times,
-      days
+      daySelected,
+      timeSelected
     })
+    this.props.navigation.navigate('Movies')
   }
   render(){
-    const isSelected = '#AAA';
+    const isSelected = '#3366ff';
     const {navigation:{state:{params:{movie:{title, genre, poster, times, days }}}}} = this.props;
     return (
       <View style={styles.container}>
@@ -44,7 +45,7 @@ export default class Booking extends React.Component{
         </Text>
         <View>
           <ScrollView horizontal={true} contentContainerStyle={styles.timeButton} showsHorizontalScrollIndicator={false}>
-            {days.map(day => <TouchableOpacity style={[styles.timeOption, {backgroundColor: day === this.state.daySelected ? isSelected : '#fff'}]} onPress={()=>this.selectDay(day)}><Text>{day}</Text></TouchableOpacity>)}
+            {days.map(day => <TouchableOpacity style={[styles.timeOption, {backgroundColor: day === this.state.daySelected ? isSelected : '#fff'}]} onPress={()=>this.selectDay(day)}><Text style={{color: day === this.state.daySelected ? '#fff' : '#000'}}>{day}</Text></TouchableOpacity>)}
           </ScrollView>
         </View>
         <Text style={styles.timeText}>
@@ -52,11 +53,11 @@ export default class Booking extends React.Component{
         </Text>
         <View>
           <ScrollView horizontal={true} contentContainerStyle={styles.timeButton} showsHorizontalScrollIndicator={false}>
-            {times.map(time => <TouchableOpacity style={[styles.timeOption,{backgroundColor: time === this.state.timeSelected ? isSelected : '#fff'}]} onPress={()=>this.selectTime(time)}><Text>{time}</Text></TouchableOpacity>)}
+            {times.map(time => <TouchableOpacity style={[styles.timeOption,{backgroundColor: time === this.state.timeSelected ? isSelected : '#fff'}]} onPress={()=>this.selectTime(time)}><Text style={{color: time === this.state.timeSelected ? '#fff' : '#000'}}>{time}</Text></TouchableOpacity>)}
           </ScrollView>
         </View>
         <TouchableHighlight style={styles.book} onPress={() => this.handleBooking(title, genre, poster, times, days)}>
-        <Text>Book My Tickets</Text>
+        <Text style={styles.buttonText}>Book My Tickets</Text>
         </TouchableHighlight>
       </View>
     );
@@ -112,10 +113,12 @@ const styles = StyleSheet.create({
   book: {
     marginTop: 15,
     alignItems: 'center',
-    borderColor: '#000',
-    borderWidth: 2,
     borderRadius: 20,
-    backgroundColor: '#AAA',
+    backgroundColor: '#3366ff',
     padding: 10,
+  },
+  buttonText: {
+    fontSize: 20,
+    color: '#fff'
   }
 });
